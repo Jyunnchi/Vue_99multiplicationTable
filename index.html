@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九九乘法表</title>
+    <script src="Vue.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main">
+        <table id="disp">
+            <tr v-for="i in 9">
+                <td v-for="j in i">
+                    <button  @mouseenter="ShowExpaination(i,j)" @mouseleave="showExpaination=!showExpaination">{{j}}*{{i}}={{i*j}}</button>
+                </td>
+            </tr>
+        </table>
+        <textarea readonly="readonly" v-show="showExpaination" >{{text}}</textarea>
+    </div>
+    <script>
+        const Disp={
+            data(){
+                return {
+                    showExpaination:false,
+                    text:""
+                }
+            },
+            methods:{
+                ShowExpaination:function(i,j){
+                    let back="";
+                    if(i*j>10){
+                        let b=i*j%10;
+                        if(b==0)b=10;
+                        back=this.Trans2Upper(Math.floor(i*j/10))+"十"+this.Trans2Upper(b);
+                    }
+                    else back="得"+this.Trans2Upper(i*j);
+                    this.text=this.Trans2Upper(j)+this.Trans2Upper(i)+back;
+                    this.showExpaination=true;
+                },
+                Trans2Upper:function(i){
+                    if(i==1)return '一';
+                    if(i==2)return '二';
+                    if(i==3)return '三';
+                    if(i==4)return '四';
+                    if(i==5)return '五';
+                    if(i==6)return '六';
+                    if(i==7)return '七';
+                    if(i==8)return '八';
+                    if(i==9)return '九';
+                    if(i==10)return "十";
+                }
+            }
+        }
+        Vue.createApp(Disp).mount("#main");
+    </script>
+</body>
+</html>
